@@ -9,7 +9,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = $_POST['password'];
 
     if (login_user($username, $password)) {
-        
         header('Location: index.php');
         exit();
     } else {
@@ -27,28 +26,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 <body>
     <div class="game-container">
-        <h1> Santa's Login </h1>
+        <h1>Santa's Login </h1>
         
-        <div style="background: rgba(0,0,0,0.5); padding: 20px; border-radius: 10px;">
+        <div class="auth-box">
             <?php if ($error): ?>
-                <p style="color: #ffcccc; background: #D42426; padding: 10px;"><?php echo $error; ?></p>
+                <div class="error-msg"><?php echo $error; ?></div>
             <?php endif; ?>
 
             <form method="post" action="login.php">
-                <div style="margin-bottom: 15px;">
-                    <label style="display:block;">Username:</label>
-                    <input type="text" name="username" required style="padding: 5px; width: 200px;">
+                <div class="input-group">
+                    <label>Username:</label>
+                    <input type="text" name="username" required>
                 </div>
 
-                <div style="margin-bottom: 15px;">
-                    <label style="display:block;">Password:</label>
-                    <input type="password" name="password" required style="padding: 5px; width: 200px;">
+                <div class="input-group">
+                    <label>Password:</label>
+                    <input type="password" name="password" required>
                 </div>
 
-                <button type="submit" class="tile" style="width: 200px; height: 50px; margin: 0 auto; font-size: 18px;">Start Playing</button>
+                <button type="submit" class="action-btn">Start Playing</button>
             </form>
             
-            <p style="margin-top: 20px;">New Elf? <a href="register.php" style="color: #fff;">Register Here</a></p>
+            <a href="register.php" class="auth-link">New Elf? Register Here</a>
         </div>
     </div>
 </body>

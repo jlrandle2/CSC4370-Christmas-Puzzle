@@ -38,10 +38,14 @@ if (!isset($_SESSION['user_id'])) {
             <div class="tile">15</div>
             <div class="tile empty-tile"></div>
         </div>
+        <div class="game-container">
+        <div class="header-controls">
+            <a href="logout.php" class="logout-btn">Logout</a>
+        </div>
+        
+        <div id="puzzle-board">
+            </div>
     </div>
-    <div style="text-align: right; margin-right: 20px;">
-    <a href="logout.php" style="color: #ffcccc; text-decoration: none; border: 1px solid white; padding: 5px 10px; border-radius: 5px;">Logout</a>
-</div>
 
     <p>Moves: <span id="move-count">0</span> | Time: <span id="timer">00:00</span></p>
     <script src="game.js"></script>
