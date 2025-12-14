@@ -19,15 +19,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Login - Christmas Puzzle</title>
     <link rel="stylesheet" href="game.css">
 </head>
+
 <body>
     <div class="game-container">
         <h1>Santa's Login </h1>
-        
+
         <div class="auth-box">
             <?php if ($error): ?>
                 <div class="error-msg"><?php echo $error; ?></div>
@@ -46,9 +48,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 <button type="submit" class="action-btn">Start Playing</button>
             </form>
-            
+
             <a href="register.php" class="auth-link">New Elf? Register Here</a>
         </div>
     </div>
 </body>
+
 </html>

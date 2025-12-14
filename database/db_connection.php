@@ -1,7 +1,7 @@
 <?php
 $servername = "localhost";
 $username = "jrandle4";
-$password = "jrandle4"; 
+$password = "jrandle4";
 $dbname = "jrandle4";
 
 
