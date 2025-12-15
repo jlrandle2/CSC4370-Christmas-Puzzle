@@ -23,7 +23,7 @@ if (!isset($_SESSION['user_id'])) {
         <a href="logout.php" class="logout-btn">Logout</a>
     </div>
 
-    <h1>🎄 Christmas Puzzle 🎄</h1>
+    <h1> Christmas Puzzle </h1>
 
 
     <div class="game-container">
@@ -61,7 +61,7 @@ if (!isset($_SESSION['user_id'])) {
 
     <div id="win-modal" class="modal hidden">
         <div class="modal-content">
-            <h2>🎉 Congratulations! 🎄</h2>
+            <h2> Congratulations! </h2>
 
             <p><strong>Time + Help:</strong> <span id="win-time"></span></p>
             <p><strong>Helps time added:</strong> <span id="win-help-time"></span> seconds</p>

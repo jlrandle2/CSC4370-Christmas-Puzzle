@@ -40,6 +40,7 @@ function playMoveSfx() {
   moveSfx.currentTime = 0;
   moveSfx.play().catch(() => {});
 }
+
 function initGame() {
   const tileCount = gridSize * gridSize;
 
@@ -53,7 +54,12 @@ function initGame() {
   resetTimer();
   helpsUsed = 0;
   moves = 0;
+  
+  
+  powerups = { freeze: 1, star: 1, bell: 1 };
+  
   updateHelpsUsed();
+  updatePowerupDisplay();
 
   hideWinModal();
   renderBoard();
@@ -69,7 +75,7 @@ function shuffleTiles() {
 function renderBoard() {
   puzzleBoard.innerHTML = "";
 
-  // Dynamic sizing
+ 
   const maxBoardSize = 420;
   const tileSize = Math.floor((maxBoardSize - (gridSize + 1) * 10) / gridSize);
 
@@ -105,6 +111,7 @@ function isAdjacent(i1, i2) {
     (Math.abs(c1 - c2) === 1 && r1 === r2)
   );
 }
+
 function moveTile(index) {
   if (!isAdjacent(index, emptyIndex)) return;
 
@@ -212,6 +219,7 @@ function saveGameStats() {
     }),
   }).catch(() => {});
 }
+
 function showWinModal() {
   if (!winModal) return;
 
@@ -231,6 +239,7 @@ function hideWinModal() {
 function closeWinModal() {
   hideWinModal();
 }
+
 function checkWin() {
   for (let i = 0; i < tiles.length - 1; i++) {
     if (tiles[i] !== i + 1) return;
@@ -258,10 +267,29 @@ function setupSizeSelector() {
   });
 }
 
+
+function showMessage(msg) {
+  alert(msg);
+}
+
+
+function highlightCorrectTiles() {
+  const allTiles = document.querySelectorAll('.tile');
+  allTiles.forEach((tile, index) => {
+     if(tile.textContent == index + 1) {
+         tile.style.backgroundColor = "#ffd700"; 
+     }
+  });
+  
+  setTimeout(() => { renderBoard(); }, 2000);
+}
+
 window.shuffleBoard = shuffleBoard;
 window.helpMove = helpMove;
 window.startTimer = startTimer;
 window.closeWinModal = closeWinModal;
+
+window.usePowerup = usePowerup; 
 
 document.addEventListener("DOMContentLoaded", () => {
   setupSizeSelector();
@@ -284,33 +312,25 @@ function createSnowflakes() {
   }
 }
 
-
 createSnowflakes();
 setInterval(createSnowflakes, 8000);
-
 
 function applyTimeBasedTheme() {
   const hour = new Date().getHours();
   
   if (hour >= 6 && hour < 12) {
-      
       document.body.style.filter = 'brightness(1.1)';
   } else if (hour >= 18 || hour < 6) {
-      
       document.body.style.filter = 'brightness(0.85)';
   }
 }
 
-
 function checkPerformanceTheme() {
   const avgTime = secondsElapsed;
-  
- 
   if (avgTime < 120) {
       document.body.classList.add('sparkle-theme');
   }
 }
-
 
 applyTimeBasedTheme();
 setInterval(applyTimeBasedTheme, 60000); 
@@ -321,9 +341,7 @@ let powerups = {
   bell: 0     
 };
 
-
 function checkPowerupEarned() {
-  
   powerups.freeze = 1;
   powerups.star = 1;
   powerups.bell = 1;
@@ -331,11 +349,15 @@ function checkPowerupEarned() {
 }
 
 function updatePowerupDisplay() {
-  document.getElementById('powerup-display').innerHTML = `
-      ❄️ Freeze: ${powerups.freeze} | 
-      ⭐ Star: ${powerups.star} | 
-      🔔 Bell: ${powerups.bell}
-  `;
+  // FIXED: Removed the stray "/" character here
+  const display = document.getElementById('powerup-display');
+  if (display) {
+      display.innerHTML = `
+          ❄️ Freeze: ${powerups.freeze} | 
+          ⭐ Star: ${powerups.star} | 
+          🔔 Bell: ${powerups.bell}
+      `;
+  }
 }
 
 function usePowerup(type) {
@@ -347,22 +369,18 @@ function usePowerup(type) {
   powerups[type]--;
   
   if (type === 'freeze') {
-      
       stopTimer();
       showMessage("⏸️ Time frozen for 10 seconds!");
       setTimeout(() => {
           startTimer();
       }, 10000);
   } else if (type === 'star') {
-      
       showMessage("⭐ Correct positions highlighted!");
       highlightCorrectTiles();
   } else if (type === 'bell') {
-      
       helpMove();
       secondsElapsed -= 30; 
   }
   
   updatePowerupDisplay();
 }
-
