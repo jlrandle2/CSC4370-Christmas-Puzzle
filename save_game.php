@@ -31,3 +31,27 @@ $stmt->execute();
 
 $stmt->close();
 $conn->close();
+
+
+$achievements = [];
+
+
+if ($timeTaken < 120) {
+    $achievements[] = 'speed_demon';
+}
+
+
+$countStmt = $conn->prepare("SELECT COUNT(*) as total FROM game_stats WHERE user_id = ?");
+$countStmt->bind_param("i", $userId);
+$countStmt->execute();
+$result = $countStmt->get_result()->fetch_assoc();
+
+if ($result['total'] >= 10) {
+    $achievements[] = 'persistent';
+}
+
+foreach ($achievements as $achievement) {
+    $achStmt = $conn->prepare("INSERT IGNORE INTO achievements (user_id, achievement_name) VALUES (?, ?)");
+    $achStmt->bind_param("is", $userId, $achievement);
+    $achStmt->execute();
+}

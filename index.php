@@ -72,6 +72,13 @@ if (!isset($_SESSION['user_id'])) {
         </div>
     </div>
 
+    
+<div style="display: flex; gap: 10px; margin-top: 10px; justify-content: center;">
+    <button class="action-btn" style="width: auto; padding: 8px 15px;" onclick="usePowerup('freeze')">❄️ Freeze</button>
+    <button class="action-btn" style="width: auto; padding: 8px 15px;" onclick="usePowerup('star')">⭐ Star</button>
+    <button class="action-btn" style="width: auto; padding: 8px 15px;" onclick="usePowerup('bell')">🔔 Bell</button>
+</div>
+
     <script src="game.js"></script>
 
 </body>

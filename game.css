@@ -1,10 +1,56 @@
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #2F5C33;
+    background: url('assets/christmas.jpg') center/cover no-repeat fixed; 
     color: white;
     text-align: center;
     margin: 0;
     padding: 20px;
+    position: relative; 
+    overflow-x: hidden; 
+}
+
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(20, 40, 30, 0.65);
+    z-index: 0;
+    pointer-events: none;
+}
+
+
+body > * {
+    position: relative;
+    z-index: 10;
+}
+
+
+.santa-decorator {
+    position: fixed;
+    bottom: -30px;
+    left: 50px;
+    width: 320px;
+    height: 420px;
+    background: url('assets/santa.png') no-repeat center;
+    background-size: contain;
+    z-index: 5;
+    pointer-events: none;
+    animation: santaWave 4s ease-in-out infinite;
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.6));
+}
+
+
+@keyframes santaWave {
+    0%, 100% { 
+        transform: rotate(0deg) translateY(0); 
+    }
+    50% { 
+        transform: rotate(2deg) translateY(-12px); 
+    }
 }
 
 .header-controls {
@@ -46,13 +92,11 @@ h1 {
     display: grid;
     gap: 10px;
     padding: 12px;
-    background-color: #c0392b;
+    background-color: #8B0000; 
     border-radius: 16px;
     margin: 0 auto;
-    /* center horizontally */
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
 }
-
 
 .tile {
     display: flex;
@@ -75,7 +119,6 @@ h1 {
     background: transparent;
     cursor: default;
 }
-
 
 .auth-box {
     background: rgba(0, 0, 0, 0.5);
@@ -189,7 +232,6 @@ h1 {
         transform: scale(0.7);
         opacity: 0;
     }
-
     to {
         transform: scale(1);
         opacity: 1;
@@ -210,4 +252,32 @@ h1 {
 .size-btn.active {
     background-color: #2ecc71 !important;
     color: #fff;
+}
+
+.snowflake {
+    position: fixed;
+    top: -10px;
+    color: white;
+    font-size: 20px;
+    opacity: 0.7;
+    animation: fall linear infinite;
+    pointer-events: none;
+    z-index: 5;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.9);
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+.sparkle-theme::after {
+    animation: sparkle 2s infinite;
+}
+
+@keyframes sparkle {
+    0%, 100% { opacity: 0.65; }
+    50% { opacity: 0.85; }
 }

@@ -133,6 +133,31 @@ $avgTotalMoves = $career['avg_total_moves'] !== null
             <p><strong>Total Moves:</strong> <?php echo $lastGame['moves'] + $lastGame['helps_used']; ?></p>
         <?php endif; ?>
 
+        <h2> Gift Collection</h2>
+<?php
+    $achStmt = $conn->prepare("SELECT achievement_name FROM achievements WHERE user_id = ?");
+    $achStmt->bind_param("i", $userId);
+    $achStmt->execute();
+    $userAchievements = $achStmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    $unlockedNames = array_column($userAchievements, 'achievement_name');
+    
+    $allAchievements = [
+        'speed_demon' => ['emoji' => '⚡', 'name' => 'Speed Demon', 'desc' => 'Complete puzzle under 2 min'],
+        'persistent' => ['emoji' => '🎄', 'name' => 'Persistent Elf', 'desc' => 'Play 10 games'],
+        'perfect_solve' => ['emoji' => '⭐', 'name' => 'Perfect Solve', 'desc' => 'Win without help'],
+        'marathon' => ['emoji' => '🏆', 'name' => 'Marathon Master', 'desc' => 'Play 50 games']
+    ];
+    
+    foreach ($allAchievements as $key => $ach) {
+        $unlocked = in_array($key, $unlockedNames);
+        $opacity = $unlocked ? '1' : '0.3';
+        echo "<div style='display:inline-block; margin:10px; opacity:{$opacity};'>";
+        echo "<div style='font-size:40px;'>{$ach['emoji']}</div>";
+        echo "<div style='font-size:12px;'>{$ach['name']}</div>";
+        echo "</div>";
+    }
+?>
+
     </div>
 
 </body>

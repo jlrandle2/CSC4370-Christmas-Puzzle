@@ -267,3 +267,103 @@ document.addEventListener("DOMContentLoaded", () => {
   setupSizeSelector();
   initGame();
 });
+
+function createSnowflakes() {
+  const snowflakeCount = 12;
+  for (let i = 0; i < snowflakeCount; i++) {
+      setTimeout(() => {
+          const snowflake = document.createElement('div');
+          snowflake.className = 'snowflake';
+          snowflake.textContent = '❄';
+          snowflake.style.left = Math.random() * 100 + '%';
+          snowflake.style.animationDuration = (Math.random() * 5 + 6) + 's';
+          snowflake.style.fontSize = (Math.random() * 8 + 16) + 'px';
+          document.body.appendChild(snowflake);
+          setTimeout(() => snowflake.remove(), parseFloat(snowflake.style.animationDuration) * 1000);
+      }, i * 300);
+  }
+}
+
+
+createSnowflakes();
+setInterval(createSnowflakes, 8000);
+
+
+function applyTimeBasedTheme() {
+  const hour = new Date().getHours();
+  
+  if (hour >= 6 && hour < 12) {
+      
+      document.body.style.filter = 'brightness(1.1)';
+  } else if (hour >= 18 || hour < 6) {
+      
+      document.body.style.filter = 'brightness(0.85)';
+  }
+}
+
+
+function checkPerformanceTheme() {
+  const avgTime = secondsElapsed;
+  
+ 
+  if (avgTime < 120) {
+      document.body.classList.add('sparkle-theme');
+  }
+}
+
+
+applyTimeBasedTheme();
+setInterval(applyTimeBasedTheme, 60000); 
+
+let powerups = {
+  freeze: 0,  
+  star: 0,    
+  bell: 0     
+};
+
+
+function checkPowerupEarned() {
+  
+  powerups.freeze = 1;
+  powerups.star = 1;
+  powerups.bell = 1;
+  updatePowerupDisplay();
+}
+
+function updatePowerupDisplay() {
+  /
+  document.getElementById('powerup-display').innerHTML = `
+      ❄️ Freeze: ${powerups.freeze} | 
+      ⭐ Star: ${powerups.star} | 
+      🔔 Bell: ${powerups.bell}
+  `;
+}
+
+function usePowerup(type) {
+  if (powerups[type] <= 0) {
+      showMessage("No " + type + " power-ups available!");
+      return;
+  }
+  
+  powerups[type]--;
+  
+  if (type === 'freeze') {
+      
+      stopTimer();
+      showMessage("⏸️ Time frozen for 10 seconds!");
+      setTimeout(() => {
+          startTimer();
+      }, 10000);
+  } else if (type === 'star') {
+      
+      showMessage("⭐ Correct positions highlighted!");
+      highlightCorrectTiles();
+  } else if (type === 'bell') {
+      
+      helpMove();
+      secondsElapsed -= 30; 
+  }
+  
+  updatePowerupDisplay();
+}
+
