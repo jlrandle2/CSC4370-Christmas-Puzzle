@@ -331,7 +331,6 @@ function checkPowerupEarned() {
 }
 
 function updatePowerupDisplay() {
-  /
   document.getElementById('powerup-display').innerHTML = `
       ❄️ Freeze: ${powerups.freeze} | 
       ⭐ Star: ${powerups.star} | 
